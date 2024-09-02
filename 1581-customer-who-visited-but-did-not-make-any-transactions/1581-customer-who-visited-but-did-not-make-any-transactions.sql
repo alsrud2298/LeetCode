@@ -1,9 +1,10 @@
-# Write your MySQL query statement below
-# 방문했지만, 아무 거래도 하지 않은 고객
-SELECT customer_id, count(visit_id) as count_no_trans
+# 거래 기록이 없는 방문자의 id와 방문 수 추출
+# 1. visited_id 에는 있지만 transaction_id 에는 없는 customer_id 추출
+# 2. customer_id 별 방문 횟수 구하기
+
+SELECT DISTINCT customer_id, COUNT(*) as count_no_trans
 FROM Visits
 WHERE visit_id NOT IN (
-    SELECT DISTINCT visit_id
-    FROM Transactions
-)
-GROUP BY 1
+    SELECT visit_id
+    FROM Transactions )
+GROUP BY customer_id
