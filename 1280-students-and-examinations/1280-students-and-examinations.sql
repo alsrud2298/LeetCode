@@ -1,4 +1,4 @@
--- 학생 별 시험에 참석한 횟수 추출 
+-- (복습) 학생 별 시험에 참석한 횟수 추출 
 -- 1. 모든 학생 x 과목 조합 테이블 생성 (Students, Subjects 테이블 조인)
 -- 2. Examinations 테이블 LEFT 조인 -> 학생&과목 별 시험 참석 횟수 구하기
 -- 3. student_id, subject_name 기준 정렬
