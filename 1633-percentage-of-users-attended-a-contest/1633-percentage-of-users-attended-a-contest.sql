@@ -3,7 +3,7 @@
 # 2. 콘테스트 당 참여 유저 수 / 전체 유저 수 
 
 SELECT contest_id,
-    ROUND(COUNT(user_id) / (SELECT COUNT(DISTINCT user_id) FROM Users),2) percentage
-FROM Users
+    ROUND(COUNT(user_id)*100 / (SELECT COUNT(DISTINCT user_id) FROM Users),2) percentage
+FROM Register
 GROUP BY contest_id
 ORDER BY percentage DESC, contest_id
