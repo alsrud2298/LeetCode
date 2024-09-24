@@ -1,15 +1,15 @@
-# 각 부서에서 월급이 많은 top 3 추출 
-# rank 중복 허용 -> DENSE_RANK()
-SELECT Department, Employee, Salary
-FROM (
-    SELECT 
-        d.name AS Department,
-        e.name AS Employee,
-        e.salary AS Salary,
-        DENSE_RANK() OVER (PARTITION BY departmentId ORDER BY salary DESC) AS rnk
-    FROM Employee e
-    JOIN Department d
-    ON e.departmentId = d.id
-    ) as rnk_tbl
+-- (복습) 각 부서 별 top 3 earners 추출
+-- 1. 부서별, salary별 rank 매기기
+-- 2. rank <= 3 인 사람만 추출
+SELECT d.name as Department,
+    rnk_tbl.name as Employee,
+    rnk_tbl.salary as Salary
+FROM(
+    SELECT departmentId,
+    name,
+    salary,
+    DENSE_RANK() OVER (PARTITION BY departmentId ORDER BY salary DESC) as rnk
+    FROM Employee) as rnk_tbl
+INNER JOIN Department d
+    ON d.id = rnk_tbl.departmentId
 WHERE rnk <= 3
-
