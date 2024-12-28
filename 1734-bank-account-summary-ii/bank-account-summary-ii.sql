@@ -4,6 +4,5 @@ SELECT name
     , SUM(amount) as balance
 FROM Transactions t
     JOIN Users u ON t.account = u.account 
-GROUP BY t.account
+GROUP BY u.account
 HAVING balance > 10000
-
