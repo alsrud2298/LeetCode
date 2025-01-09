@@ -2,8 +2,7 @@
 # 아니라면, 0원
 
 SELECT employee_id
-    , CASE WHEN employee_id IN (SELECT employee_id FROM Employees WHERE MOD(employee_id,2) = 1
-                                AND LEFT(name,1) != 'M') THEN salary
+    , CASE WHEN MOD(employee_id,2) = 1 AND LEFT(name,1) != 'M' THEN salary
         ELSE 0 END bonus
 FROM Employees
 ORDER BY 1
