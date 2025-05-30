@@ -1,28 +1,14 @@
-WITH free_trial_user AS ( -- 1. activity_type = ‘free_trial’ 인 유저만 추출 → 평균 활동 시간 구하기
-    SELECT
-        user_id,
-        ROUND(AVG(activity_duration),2) AS trial_avg_duration
-    FROM UserActivity
-    WHERE activity_type = 'free_trial'
-    GROUP BY user_id 
-), paid_subscription_user AS ( -- 2. activity_type = ‘paid’인 유저만 추출 → 평균 활동 시간 구하기
-    SELECT
-        user_id,
-        ROUND(AVG(activity_duration),2) AS paid_avg_duration
-    FROM UserActivity
-    WHERE activity_type = 'paid'
-    GROUP BY user_id 
-)
+-- No Joins Only Subquery
 
--- 3. user_id 기준으로 두 테이블 JOIN. (두 테이블 다 존재해야 하므로 INNER JOIN)
 SELECT
-    ftu.user_id,
-    trial_avg_duration,
-    paid_avg_duration
-FROM free_trial_user ftu
-JOIN paid_subscription_user psu
-ON ftu.user_id = psu.user_id
+    user_id,
+    -- AVG 사용 시, 해당 유저의 전체 기록에 대한 평균이 도출됨
+    ROUND(SUM(CASE WHEN activity_type = 'free_trial' THEN activity_duration ELSE 0 END) / SUM(CASE WHEN activity_type = 'free_trial' THEN 1 ELSE 0 END),2) AS trial_avg_duration,
+    ROUND(SUM(CASE WHEN activity_type = 'paid' THEN activity_duration ELSE 0 END) / SUM(CASE WHEN activity_type = 'paid' THEN 1 ELSE 0 END),2) AS paid_avg_duration
+FROM UserActivity
+-- cancel 되자 않고, paid로 전환된 유저를 대상으로 게산하고자 조건 설정
+WHERE user_id IN ( SELECT DISTINCT user_id FROM UserActivity WHERE activity_type = 'paid' )
+GROUP BY
+    user_id
 ORDER BY
-    ftu.user_id
-
-
+    user_id
