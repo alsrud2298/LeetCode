@@ -13,4 +13,5 @@ Collection of LeetCode questions to ace the coding interview! - Created using [L
 | [3891-find-category-recommendation-pairs](https://github.com/alsrud2298/LeetCode/tree/master/3891-find-category-recommendation-pairs) |
 | [3910-find-books-with-no-available-copies](https://github.com/alsrud2298/LeetCode/tree/master/3910-find-books-with-no-available-copies) |
 | [3921-find-consistently-improving-employees](https://github.com/alsrud2298/LeetCode/tree/master/3921-find-consistently-improving-employees) |
+| [3932-find-covid-recovery-patients](https://github.com/alsrud2298/LeetCode/tree/master/3932-find-covid-recovery-patients) |
 <!---LeetCode Topics End-->
